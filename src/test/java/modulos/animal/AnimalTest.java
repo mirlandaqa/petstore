@@ -1,6 +1,7 @@
 package modulos.animal;
 
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,16 +11,19 @@ import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
 
-@DisplayName("Testes de API Rest do modulo A")
+@DisplayName("Testes de API Rest do modulo de Pets")
 public class AnimalTest {
+
+    @BeforeEach
+    public void beforEach(){
+        //Configurando os dados da API Rest da petstoreAPI
+        baseURI = "https://petstore.swagger.io/";
+        basePath = "/v2";
+    }
 
     @Test
     @DisplayName("Retornar lista de inventário de animais de estimação")
     public void testValidarListaDePets(){
-        //Configurando os dados da API Rest da petstoreAPI
-        baseURI = "https://petstore.swagger.io/";
-        basePath = "/v2";
-
         given()
                 .when()
                     .get("/store/inventory")
@@ -30,9 +34,6 @@ public class AnimalTest {
     @Test
     @DisplayName("Adicionar novo pet na loja")
     public void testValidarCadastroDePet(){
-
-        baseURI = "https://petstore.swagger.io/";
-        basePath = "/v2";
 
         given()
                 .contentType(ContentType.JSON)
